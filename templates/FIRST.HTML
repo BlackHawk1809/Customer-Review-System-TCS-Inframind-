@@ -1,0 +1,156 @@
+<html>
+  <head>
+    <style>
+    .mybody {
+    border: 5px;
+    background-color:#EFDE90;
+    text-align: center;
+  }
+      .myDiv {
+      border: 5px outset red;
+      background-color: #F9F1DB;
+      text-align: center;
+    }
+    .positive{
+      color : green;
+    }
+    .negative{
+      color : red;
+    }
+    .mysentiment{
+      font-weight: bold;
+      font-size: 40;
+      color : green;
+
+    }
+    .ribbon {
+ font-size: 30px !important;
+ /* This ribbon is based on a 16px font side and a 24px vertical rhythm. I've used em's to position each element for scalability. If you want to use a different font size you may have to play with the position of the ribbon elements */
+
+ width: 50%;
+
+ position: relative;
+ background:#FBBC07;
+ color: #fff;
+ text-align: center;
+ padding: 1em 2em; /* Adjust to suit */
+ margin: 2em auto 3em; /* Based on 24px vertical rhythm. 48px bottom margin - normally 24 but the ribbon 'graphics' take up 24px themselves so we double it. */
+}
+.ribbon:before, .ribbon:after {
+ content: "";
+ position: absolute;
+ display: block;
+ bottom: -1em;
+ border: 1.5em solid #986794;
+ z-index: -1;
+}
+.ribbon:before {
+ left: -2em;
+ border-right-width: 1.5em;
+ border-left-color: transparent;
+}
+.ribbon:after {
+ right: -2em;
+ border-left-width: 1.5em;
+ border-right-color: transparent;
+}
+.ribbon .ribbon-content:before, .ribbon .ribbon-content:after {
+ content: "";
+ position: absolute;
+ display: block;
+ border-style: solid;
+ border-color: #804f7c transparent transparent transparent;
+ bottom: -1em;
+}
+.ribbon .ribbon-content:before {
+ left: 0;
+ border-width: 1em 0 0 1em;
+}
+.ribbon .ribbon-content:after {
+ right: 0;
+ border-width: 1em 1em 0 0;
+}
+     .myHead {
+    border: 5px;
+    color: #0A0B6E;
+    text-align: center;
+  }
+    </style>
+    <title>Customer Review System </title>
+
+  </head>
+
+  <body  class = "mybody">
+    <h1 class="ribbon">
+   <strong class="ribbon-content">Customer Review System</strong>
+</h1>
+    <HR>
+
+    <H2 ALIGN="CENTER">SENTIMENT TEXT ANALYSIS </H2>
+
+    <BR><BR><BR>
+
+<div class="myDiv">
+      <div class="content-section">
+      <form action="/predict" method="POST">
+      	<textarea class="form-control form-control-lg" type="text" name="text" rows=10 placeholder="Enter something to see if your text is Negative or positive."></textarea>
+      	<input type="submit" name="submit" value="Submit"  class="btn btn-success">
+        <h1>Sentiment</h1>
+      	{% if prediction == 1 %}
+      	<h2 class="positive">{{ "Positive!" }}</h2><div class="content-section"><h1>Emotion</h1>
+          <img src="{{ image }}" alt="Image">
+        </div>
+      	{% elif prediction == 0 %}
+      	<h2 class="negative">{{ "Negative!" }}</h2><div class="content-section"><h1>Emotion</h1>
+          <img src="{{ image }}" alt="Image">
+        </div>
+      	{% endif %}
+      </form>
+
+      <!--Image -->
+      <div class="content-section"></div>
+      	{% if prediction == 1 %}
+
+      	{% endif %}
+      <!------------------------------------------------------>
+      </div>
+    </div>
+
+
+
+    <H2 ALIGN="CENTER">SENTIMENT IMAGE ANALYSIS </H2>
+
+    <BR><BR><BR>
+
+    <div class="myDiv">
+       <form action="/image_sentiment/after" method="post" enctype="multipart/form-data">
+         <label>Upload Image</label>
+         <input type="file" name="file1" >
+         <input type="Submit">
+       </form>
+       <img src="{{url_for('static', filename='after.jpg')}}" alt="image" height=40% width = 30%>
+       <div>
+         <h1>Sentiment</h1>
+       </div>
+       <div class='mysentiment'>
+         {{data}}
+       </div>
+    </div>
+
+    <H2 ALIGN="CENTER">Product Recommendation </H2>
+    <div class="myDiv">
+      <form action="{{url_for('view')}}">
+        <input type="text" name="prod" class="form-control">
+        <input type="submit" class="btn btn-info" value="VIEW">
+      </form>
+    </div>
+
+    <H2 ALIGN="CENTER">Chat Bot </H2>
+    <div class="myDiv">
+        <form action="/chat" method='get'>
+          <h5>Talk to chat bot...</h5>
+          <input type="submit" name="btn" value='Start Chat' class='btn btn-warning'>
+        </form>
+    </div>
+  </body>
+</html>
